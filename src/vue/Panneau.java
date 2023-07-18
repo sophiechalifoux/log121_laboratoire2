@@ -1,23 +1,20 @@
 package vue;
-
-import controleur.DecrementController;
-import controleur.IncrementController;
-import modele.Nombre;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import modele.ImageModele;
+
 import java.awt.*;
 
-public class Panneau extends JPanel {
+public class Panneau extends JPanel{
 
-    private final JPanel panneauGauche;
-    private final PanneauCentre panneauCentre;
-    private final JPanel panneauDroite;
+    private final Perspective panneauGauche;
+    private final Perspective panneauCentre;
+    private final Perspective panneauDroite;
 
-    public Panneau(Nombre modele, IncrementController incrementController, DecrementController decrementController) {
-        this.panneauGauche = new JPanel();
-        this.panneauCentre = new PanneauCentre(modele, incrementController, decrementController);
-        this.panneauDroite = new JPanel();
+    public Panneau() {
+        this.panneauGauche = new Perspective();
+        this.panneauCentre = new Perspective();
+        this.panneauDroite = new Perspective();
         initialiser();
     }
 
@@ -31,6 +28,12 @@ public class Panneau extends JPanel {
         panneauGauche.setBackground(Color.BLUE);
         panneauCentre.setBackground(Color.RED);
         panneauDroite.setBackground(Color.YELLOW);
+
+        ImageModele.getInstanceModele().ajouterObservateur(panneauCentre);
+        ImageModele.getInstanceModele().ajouterObservateur(panneauDroite);        
+        ImageModele.getInstanceModele().ajouterObservateur(panneauGauche);
+
+
 
         this.setLayout(new GridLayout(1,3));
     }

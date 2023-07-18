@@ -1,11 +1,15 @@
 package controleur;
 
 import java.awt.event.*;
+import java.io.File;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
+
+import modele.ImageModele;
 
 public class MenuItemListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {  
@@ -25,7 +29,12 @@ public class MenuItemListener implements ActionListener {
 
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 
+                File selectedFile = fileChooser.getSelectedFile();
 
+                String file = selectedFile.getAbsolutePath();
+                System.out.println(file);
+
+                ImageModele.getInstanceModele().setImage(new ImageIcon(file));
             }
 
          }

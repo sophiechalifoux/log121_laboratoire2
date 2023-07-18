@@ -1,24 +1,15 @@
 package vue;
 
-import controleur.DecrementController;
-import controleur.IncrementController;
-import modele.Nombre;
-import utils.Observable;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Fenetre extends JFrame {
 
     private final Panneau panneau;
     private final Menu menu;
 
-    public Fenetre(
-        Nombre modele,
-        IncrementController incrementController,
-        DecrementController decrementController
-    ) {
-        this.panneau = new Panneau(modele, incrementController, decrementController);
+    public Fenetre() {
+        this.panneau = new Panneau();
         this.menu = new Menu();
         initialiser();
     }

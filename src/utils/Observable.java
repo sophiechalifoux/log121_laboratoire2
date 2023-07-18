@@ -1,7 +1,17 @@
 package utils;
 
-public interface Observable<T> {
+import java.util.ArrayList;
 
-    void ajouterObservateur(Observateur<T> observateur);
-    void retirerObservateur(Observateur<T> observateur);
+public abstract class Observable {
+
+    private ArrayList<Observateur> ListObserver = new ArrayList<>();
+
+
+    public void ajouterObservateur(Observateur observateur){ListObserver.add(observateur);}
+    public void retirerObservateur(Observateur observateur){ListObserver.remove(observateur);}
+    public void notifier(){
+        for (Observateur observateur : ListObserver) {
+            observateur.update();
+        }
+    }
 }

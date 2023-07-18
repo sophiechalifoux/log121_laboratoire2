@@ -1,6 +1,6 @@
 package utils;
 
-public interface Observateur<T> {
+public interface Observateur {
 
-    void onChanged(T newValue);
+    public void update();
 }
