@@ -1,6 +1,5 @@
 package vue;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
@@ -24,7 +23,8 @@ public class Perspective extends JPanel implements Observateur{
     public void paint(Graphics g) {   
 
         if (image != null){        
-           // g.drawImage(image.getImage(),0,0,null);
+            g.drawImage(image.getImage(),0,0,null);
+           
         }
     }
 
