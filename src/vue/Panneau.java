@@ -14,9 +14,9 @@ public class Panneau extends JPanel {
     private final Perspective panneauDroite;
 
     public Panneau() {
-        this.panneauGauche = new Perspective("gauche");
-        this.panneauCentre = new Perspective("centre");
-        this.panneauDroite = new Perspective("droite");
+        this.panneauGauche = new Perspective("Gauche");
+        this.panneauCentre = new Perspective("Centre");
+        this.panneauDroite = new Perspective("Droite");
         initialiser();
     }
 
