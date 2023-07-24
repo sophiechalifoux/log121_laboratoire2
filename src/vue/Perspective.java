@@ -12,7 +12,6 @@ import utils.Observateur;
 
 public class Perspective extends JPanel implements Observateur, MouseListener {
 
-    private String perspectiveName;
     private ImageModele model = ImageModele.getInstanceModele();
     private ImageIcon image = new ImageIcon();
     private String position;
@@ -53,11 +52,11 @@ public class Perspective extends JPanel implements Observateur, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (perspectiveName.equals("gauche")) {
+        if (position.equals("Gauche")) {
             System.out.println("Left Click");
-        } else if (perspectiveName.equals("centre")) {
+        } else if (position.equals("Centre")) {
             System.out.println("Center Click");
-        } else if (perspectiveName.equals("droite")) {
+        } else if (position.equals("Droite")) {
             System.out.println("Right Click");
         }
     }

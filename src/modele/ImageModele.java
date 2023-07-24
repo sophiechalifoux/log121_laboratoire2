@@ -10,7 +10,6 @@ public class ImageModele extends Observable{
     private static ImageModele instanceModele;
     private double echelle;
     private Point position;
-    private ImageModele Memento;
     private ImageIcon imageGauche;
     private ImageIcon imageCentre;
     private ImageIcon imageDroite;
