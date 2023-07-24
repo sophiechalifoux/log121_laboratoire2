@@ -7,15 +7,38 @@ import javax.swing.ImageIcon;
 public class ImageModele extends Observable{
 
     private static ImageModele instanceModele;
-    private ImageIcon image;
+    private ImageModele Memento;
+    private ImageIcon imageGauche;
+    private ImageIcon imageCentre;
+    private ImageIcon imageDroite;
 
-    public ImageIcon getImage() {
-        return image;
+    public ImageIcon getImageGauche() {
+        return imageGauche;
     }
 
-    public void setImage(ImageIcon image) {
-        this.image = image;
+    public void setImageGauche(ImageIcon imageGauche) {
+        this.imageGauche = imageGauche;
         notifier();
+    }
+
+    public ImageIcon getImageCentre() {
+        return imageCentre;
+    }
+
+    public void setImageCentre(ImageIcon imageCentre) {
+        this.imageCentre = imageCentre;        
+        notifier();
+
+    }
+
+    public ImageIcon getImageDroite() {
+        return imageDroite;
+    }
+
+    public void setImageDroite(ImageIcon imageDroite) {
+        this.imageDroite = imageDroite;
+        notifier();
+
     }
 
     public static ImageModele getInstanceModele() {
@@ -25,8 +48,8 @@ public class ImageModele extends Observable{
         return instanceModele;
     }
 
-    public ImageMemento creerMemento(){return null;}
+    public ImageMemento creerMemento(){return new ImageMemento(instanceModele);}
 
-    public void restaurerMemento(ImageMemento m){}
+    public void restaurerMemento(ImageMemento m){instanceModele = m.getImageSauvegarder();}
     
 }

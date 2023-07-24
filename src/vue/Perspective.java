@@ -12,12 +12,16 @@ public class Perspective extends JPanel implements Observateur{
 
     private ImageModele model = ImageModele.getInstanceModele();
     private ImageIcon image = new ImageIcon();
-
+    private String position;
 
     
 
-    public Perspective(){
+    public String getPosition() {
+        return position;
+    }
 
+    public Perspective(String position){
+        this.position = position;
     }
 
     public void paint(Graphics g) {   
@@ -30,7 +34,17 @@ public class Perspective extends JPanel implements Observateur{
 
     public void update(){
 
-        image = model.getImage();
+        if (image != null){
+
+            if (position.equals("Centre")){
+                image = model.getImageCentre();
+            }else if(position.equals("Droite")){
+                image = model.getImageDroite();
+            }
+        }else {
+            image = model.getImageGauche();
+
+        }
         repaint();
 
     }
