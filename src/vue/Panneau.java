@@ -4,17 +4,19 @@ import javax.swing.*;
 import modele.ImageModele;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class Panneau extends JPanel{
+public class Panneau extends JPanel {
 
     private final Perspective panneauGauche;
     private final Perspective panneauCentre;
     private final Perspective panneauDroite;
 
     public Panneau() {
-        this.panneauGauche = new Perspective();
-        this.panneauCentre = new Perspective();
-        this.panneauDroite = new Perspective();
+        this.panneauGauche = new Perspective("gauche");
+        this.panneauCentre = new Perspective("centre");
+        this.panneauDroite = new Perspective("droite");
         initialiser();
     }
 
@@ -37,4 +39,5 @@ public class Panneau extends JPanel{
 
         this.setLayout(new GridLayout(1,3));
     }
+
 }

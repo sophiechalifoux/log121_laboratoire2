@@ -2,6 +2,8 @@ package vue;
 
 
 import javax.swing.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class Fenetre extends JFrame {
 
@@ -15,11 +17,11 @@ public class Fenetre extends JFrame {
     }
 
     private void initialiser() {
+        this.setTitle("Éditeur d'image");
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setContentPane(panneau);
         this.setJMenuBar(menu);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
-
 }
