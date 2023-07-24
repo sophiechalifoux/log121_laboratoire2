@@ -15,13 +15,15 @@ public class Perspective extends JPanel implements Observateur, MouseListener {
     private String perspectiveName;
     private ImageModele model = ImageModele.getInstanceModele();
     private ImageIcon image = new ImageIcon();
+    private String position;
+        
+    public String getPosition() {
+        return position;
+    }
 
-
-    
-
-    public Perspective(String perspectiveName){
-        this.perspectiveName = perspectiveName;
+    public Perspective(String position){
         this.addMouseListener(this);
+        this.position = position;
     }
 
     public void paint(Graphics g) {   
@@ -34,7 +36,17 @@ public class Perspective extends JPanel implements Observateur, MouseListener {
 
     public void update(){
 
-        image = model.getImage();
+        if (image != null){
+
+            if (position.equals("Centre")){
+                image = model.getImageCentre();
+            }else if(position.equals("Droite")){
+                image = model.getImageDroite();
+            }
+        }else {
+            image = model.getImageGauche();
+
+        }
         repaint();
 
     }

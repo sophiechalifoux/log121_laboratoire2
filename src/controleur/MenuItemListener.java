@@ -35,7 +35,9 @@ public class MenuItemListener implements ActionListener {
                 System.out.println(file);
 
                 ImageIcon image = new ImageIcon(file);
-                ImageModele.getInstanceModele().setImage(image);
+
+                ImageModele.getInstanceModele().setImageGauche(image);
+
             }
 
          }
