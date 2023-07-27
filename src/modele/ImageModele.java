@@ -4,73 +4,34 @@ import controleur.*;
 import utils.*;
 import javax.swing.ImageIcon;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
-public class ImageModele extends Observable{
+/**
+ * Classe representant le sujet
+ */
+public class ImageModele extends Observable {
 
-    private static ImageModele instanceModele;
-    private double echelle;
-    private Point position;
-    private ImageIcon imageGauche;
-    private ImageIcon imageCentre;
-    private ImageIcon imageDroite;
+    private ImageIcon image;
 
-    public ImageIcon getImageGauche() {
-        return imageGauche;
+    public ImageModele() {
     }
-        
-    public void setImageGauche(ImageIcon imageGauche) {
-        echelle = 100.0;
-        position = new Point(0,0);
-        this.imageGauche = imageGauche;
 
+    public void setImage(ImageIcon image) {
+        this.image = image;
         notifier();
     }
 
-    public ImageIcon getImageCentre() {
-        return imageCentre;
+    public ImageIcon getImage() {
+        return image;
     }
 
-    public void setImageCentre(ImageIcon imageCentre) {
-        this.imageCentre = imageCentre;        
-        notifier();
+    // Methodes liees aux commandes
+    public void translater(){}
+    public void zoomer(){}
 
-    }
 
-    public ImageIcon getImageDroite() {
-        return imageDroite;
-    }
-
-    public void setImageDroite(ImageIcon imageDroite) {
-        this.imageDroite = imageDroite;
-        notifier();
-
-    }
-
-    public static ImageModele getInstanceModele() {
-        if (instanceModele == null){
-            instanceModele = new ImageModele();
-        }
-        return instanceModele;
-    }
-
-    public double getEchelle() {
-        return echelle;
-    }
-
-    public void setEchelle(double echelle) {
-        this.echelle = echelle;
-    }
-
-    public Point getPosition() {
-        return position;
-    }
-
-    public void setPosition(Point position) {
-        this.position = position;
-    }
-
-    public ImageMemento creerMemento(){return new ImageMemento(instanceModele);}
-
-    public void restaurerMemento(ImageMemento m){instanceModele = m.getImageSauvegarder();}
+//    public ImageMemento creerMemento(){return new ImageMemento(instanceModele);}
+//
+//    public void restaurerMemento(ImageMemento m){instanceModele = m.getImageSauvegarder();}
     
 }

@@ -1,27 +1,39 @@
 package controleur;
 
-import java.awt.event.*;
-import java.io.File;
+import modele.ImageModele;
+import vue.Panneau;
 
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
-import modele.ImageModele;
-
 public class MenuItemListener implements ActionListener {
-      public void actionPerformed(ActionEvent e) {  
-         if( ((JMenuItem) e.getSource()).getText() == "Save"){
+    EditeurImage editeurImage = EditeurImage.getInstance();
+    Panneau panneau;
+
+    public MenuItemListener(Panneau panneau) {
+        this.panneau = panneau;
+    }
+    public void actionPerformed(ActionEvent e) {
+        if( ((JMenuItem) e.getSource()).getText().equals("Save")){
+            //TODO
 
          }
-         if( ((JMenuItem) e.getSource()).getText() == "Open"){
+         if( ((JMenuItem) e.getSource()).getText().equals("Open")){
 
             JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-			fileChooser.setDialogTitle( "S�lectionnez un fichier de configuration");
+			fileChooser.setDialogTitle( "Sélectionnez un fichier de configuration");
 			fileChooser.setAcceptAllFileFilterUsed(false);
-			// Cr�er un filtre
+			// Créer un filtre
 			FileNameExtensionFilter filtre = new FileNameExtensionFilter(".jpg", "jpg");
 			fileChooser.addChoosableFileFilter(filtre);
 
@@ -30,16 +42,19 @@ public class MenuItemListener implements ActionListener {
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 
                 File selectedFile = fileChooser.getSelectedFile();
-
                 String file = selectedFile.getAbsolutePath();
-                System.out.println(file);
-
                 ImageIcon image = new ImageIcon(file);
+                    if (editeurImage.getImageModele() == null) {
+                        editeurImage.setImageModele(new ImageModele());
+                    }
+                editeurImage.getImageModele();
 
-                ImageModele.getInstanceModele().setImageGauche(image);
-
+                    panneau.getVignetteLabel().setIcon(image);
+                    panneau.getPerspective1Label().setIcon(image);
+                    panneau.getPerspective2Label().setIcon(image);
             }
-
+                panneau.update();
          }
-      }
+
+    }
 }

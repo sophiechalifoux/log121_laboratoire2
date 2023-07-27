@@ -1,16 +1,16 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Observable {
 
-    private ArrayList<Observateur> ListObserver = new ArrayList<>();
+    private List<Observateur> observateurs = new ArrayList<>();
 
-
-    public void ajouterObservateur(Observateur observateur){ListObserver.add(observateur);}
-    public void retirerObservateur(Observateur observateur){ListObserver.remove(observateur);}
+    public void ajouterObservateur(Observateur observateur){observateurs.add(observateur);}
+    public void retirerObservateur(Observateur observateur){observateurs.remove(observateur);}
     public void notifier(){
-        for (Observateur observateur : ListObserver) {
+        for (Observateur observateur : observateurs) {
             observateur.update();
         }
     }

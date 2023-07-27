@@ -9,17 +9,15 @@ public class Menu extends JMenuBar {
     private final JMenuItem open;
     private final JMenuItem save;
 
-    public Menu() {
+    public Menu(Panneau panneau) {
         this.ongletFichier = new JMenu("Fichier");
         this.open = new JMenuItem("Open");
         this.save = new JMenuItem("Save");
-
-        initialiser();
+        initialiser(panneau);
     }
 
-    private void initialiser() {
-
-        MenuItemListener menuItemListener = new MenuItemListener();
+    private void initialiser(Panneau panneau) {
+        MenuItemListener menuItemListener = new MenuItemListener(panneau);
 
         save.addActionListener(menuItemListener);
         open.addActionListener(menuItemListener);

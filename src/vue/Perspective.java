@@ -1,83 +1,45 @@
 package vue;
 
-import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
+import javax.swing.*;
 
+import controleur.EditeurImage;
 import modele.ImageModele;
 import utils.Observateur;
 
-public class Perspective extends JPanel implements Observateur, MouseListener {
+/**
+ * Classe qui agit comme l'invocateur (invoker)
+ */
 
-    private ImageModele model = ImageModele.getInstanceModele();
-    private ImageIcon image = new ImageIcon();
-    private String position;
-        
-    public String getPosition() {
-        return position;
+public abstract class Perspective extends JPanel implements Observateur {
+
+    private EditeurImage editeurImage = EditeurImage.getInstance();
+    private ImageModele imageModele;
+
+
+    public Perspective(ImageModele imageModele){
+        this.imageModele = imageModele;
+        imageModele.ajouterObservateur(this);
+
     }
 
-    public Perspective(String position){
-        this.addMouseListener(this);
-        this.position = position;
-    }
-
-    public void paint(Graphics g) {   
-
-        if (image != null){        
-            g.drawImage(image.getImage(),0,0,null);
-           
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (imageModele != null) {
+            if (imageModele.getImage() != null) {
+                ImageIcon image = imageModele.getImage();
+//                ImageIcon scaledImage = imageModele.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+                g.drawImage(image.getImage(), (this.getWidth() - image.getIconWidth()) / 2, (this.getHeight() - image.getIconHeight()) / 2, this);
+                revalidate();
+            }
         }
     }
 
     public void update(){
-
-        if (image != null){
-
-            if (position.equals("Centre")){
-                image = model.getImageCentre();
-            }else if(position.equals("Droite")){
-                image = model.getImageDroite();
-            }
-        }else {
-            image = model.getImageGauche();
-
-        }
         repaint();
 
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if (position.equals("Gauche")) {
-            System.out.println("Left Click");
-        } else if (position.equals("Centre")) {
-            System.out.println("Center Click");
-        } else if (position.equals("Droite")) {
-            System.out.println("Right Click");
-        }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
 }
