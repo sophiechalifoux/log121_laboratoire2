@@ -1,8 +1,14 @@
 package commands;
 
-import vue.Perspective;
+import modele.ImageModele;
+import modele.Perspective;
+import vue.Vue;
 
 import java.awt.*;
+
+/**
+ * Classe qui permet la translation d'une image a l'aide de la souris.
+ */
 
 public class TranslationCommande implements Commande {
 
@@ -16,7 +22,7 @@ public class TranslationCommande implements Commande {
 
     @Override
     public void execute() {
-
+        perspective.translater(translation);
     }
 
     @Override

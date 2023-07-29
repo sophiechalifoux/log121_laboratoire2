@@ -3,13 +3,9 @@ package controleur;
 import modele.ImageModele;
 import vue.Panneau;
 
-import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
@@ -44,14 +40,12 @@ public class MenuItemListener implements ActionListener {
                 File selectedFile = fileChooser.getSelectedFile();
                 String file = selectedFile.getAbsolutePath();
                 ImageIcon image = new ImageIcon(file);
-                    if (editeurImage.getImageModele() == null) {
-                        editeurImage.setImageModele(new ImageModele());
-                    }
-                editeurImage.getImageModele();
+                ImageModele imageModele = panneau.getImageModele();
+                imageModele.setImage(image);
 
-                    panneau.getVignetteLabel().setIcon(image);
-                    panneau.getPerspective1Label().setIcon(image);
-                    panneau.getPerspective2Label().setIcon(image);
+                // Notify the observers to update the views
+                imageModele.notifier();
+
             }
                 panneau.update();
          }

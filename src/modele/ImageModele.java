@@ -1,10 +1,7 @@
 package modele;
 
-import controleur.*;
-import utils.*;
+import observateur.*;
 import javax.swing.ImageIcon;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * Classe representant le sujet
@@ -26,12 +23,5 @@ public class ImageModele extends Observable {
     }
 
     // Methodes liees aux commandes
-    public void translater(){}
-    public void zoomer(){}
 
-
-//    public ImageMemento creerMemento(){return new ImageMemento(instanceModele);}
-//
-//    public void restaurerMemento(ImageMemento m){instanceModele = m.getImageSauvegarder();}
-    
 }

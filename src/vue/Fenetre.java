@@ -11,13 +11,15 @@ import java.awt.*;
  */
 
 public class Fenetre extends JFrame {
-
     private  Panneau panneau;
     private  Menu menu;
 
     public Fenetre() {
         this.panneau = new Panneau();
+        System.out.println("Panneau instancie");
         this.menu = new Menu(panneau);
+        System.out.println("Menu instancie");
+
         initialiser();
     }
 

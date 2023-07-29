@@ -2,11 +2,11 @@ package commands;
 import java.util.Stack;
 
 import controleur.ImageMemento;
-import vue.Perspective;
+import vue.Vue;
 
 public class UndoCommande implements Commande {
 
-    private Perspective perspective;
+    private Vue perspective;
     private ImageMemento memento;
     private Stack<ImageMemento> PileMemento = new Stack<>();
     

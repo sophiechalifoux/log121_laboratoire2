@@ -1,32 +1,38 @@
 package vue;
 
-import commands.Commande;
+import controleur.EditeurImage;
 import modele.ImageModele;
+import modele.Perspective;
+import observateur.Observateur;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-public class VueModifiable extends Perspective {
-    public VueModifiable(ImageModele imageModele) {
-        super(imageModele);
-        addMouseListener(new ImageMouseListener());
+public class VueModifiable extends Vue implements Observateur {
+
+    EditeurImage editeurImage = EditeurImage.getInstance();
+
+
+    public VueModifiable(ImageModele imageModele, Perspective perspective, String nom) {
+        super(imageModele,perspective, nom);
     }
 
-    // Méthodes liées aux commandes
-    public void translate(Point point){}
-    public void zoom(double echelle){}
-    public void undo(Commande commande){}
-
-    private class ImageMouseListener extends MouseAdapter {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            super.mouseClicked(e);
-            System.out.println("Click");
+    @Override
+    public void paintComponent(Graphics g)  {
+        System.out.println("Paint Component called");
+        super.paintComponent(g);
+        if ( getImageModele()!= null) {
+            Point translation = getPerspective().getPosition();
+            if (getImageModele().getImage() != null) {
+                ImageIcon image = getImageModele().getImage();
+                g.drawImage(image.getImage(), translation.x, translation.y, this);
+            }
         }
-
-
     }
 
-
+    @Override
+    public void update() {
+        repaint();
+        System.out.println("Update method called in VueModifiable");
+    }
 }

@@ -1,3 +1,4 @@
+import controleur.Controleur;
 import controleur.EditeurImage;
 import modele.ImageModele;
 import vue.Fenetre;

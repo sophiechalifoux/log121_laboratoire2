@@ -1,8 +1,8 @@
 package commands;
 
-public interface Commande {
+public interface  Commande {
 
-    void execute();
-    void undo();
+    public void execute();
+    public void undo();
     
 }

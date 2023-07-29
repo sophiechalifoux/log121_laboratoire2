@@ -1,6 +1,7 @@
 package vue;
-import controleur.EditeurImage;
+import controleur.Controleur;
 import modele.ImageModele;
+import modele.Perspective;
 
 import javax.swing.*;
 
@@ -9,81 +10,68 @@ import java.awt.*;
 public class Panneau extends JPanel {
 
     private ImageModele imageModele;
-    private  Perspective vignette;
-    private    JLabel vignetteLabel;
-    private  Perspective perspective1;
-    private JLabel perspective1Label;
-    private  Perspective perspective2;
-    private JLabel perspective2Label;
+    private Vue vueVignette;
+    private Vue vue1;
+    private Vue vue2;
+    private Controleur controleur;
 
     public Panneau() {
         imageModele = new ImageModele();
-        this.vignette = new Vignette(imageModele);
-        this.perspective1 = new VueModifiable(imageModele);
-        this.perspective2 = new VueModifiable(imageModele);
 
-        this.vignetteLabel = new JLabel(imageModele.getImage());
-        this.perspective1Label = new JLabel(imageModele.getImage());
-        this.perspective2Label = new JLabel(imageModele.getImage());
+        Perspective perspectiveVignette = new Perspective(imageModele);
+        Perspective perspectiveVue1 = new Perspective(imageModele);
+        Perspective perspectiveVue2 = new Perspective(imageModele);
 
+        this.vueVignette = new Vignette(imageModele, perspectiveVignette,"Vignette");
+        this.vue1 = new VueModifiable(imageModele, perspectiveVue1, "Vue1");
+        this.vue2 = new VueModifiable(imageModele, perspectiveVue2,"Vue2");
         initialiser();
+
+        perspectiveVignette.ajouterObservateur(vueVignette);
+        perspectiveVue1.ajouterObservateur(vue1);
+        perspectiveVue2.ajouterObservateur(vue2);
+
+        this.controleur = new Controleur(imageModele, perspectiveVignette, perspectiveVue1, perspectiveVue2, this);
+
     }
 
     private void initialiser() {
         // Ajouter les panneaux au panneau principal
-        this.add(vignette);
-        this.add(perspective1);
-        this.add(perspective2);
+        this.add(vueVignette);
+        this.add(vue1);
+        this.add(vue2);
         this.setLayout(new GridLayout(1,3));
 
+        vueVignette.setBackground(Color.BLUE);
+        vue1.setBackground(Color.RED);
+        vue2.setBackground(Color.YELLOW);
 
-        vignette.setBackground(Color.BLUE);
-        perspective1.setBackground(Color.RED);
-        perspective2.setBackground(Color.YELLOW);
+        vue1.addMouseListener(controleur);
+        vue1.addMouseMotionListener(controleur);
+        vue1.addMouseWheelListener(controleur);
 
-        vignette.add(vignetteLabel);
-        perspective1.add(perspective1Label);
-        perspective2.add(perspective2Label);
-
-
-        vignetteLabel.setIcon(new ImageIcon("C:\\Users\\sophi\\Documents\\log121_laboratoire2\\src\\marmotte.jpg"));
-        perspective1Label.setIcon(new ImageIcon("C:\\Users\\sophi\\Documents\\log121_laboratoire2\\src\\marmotte.jpg"));
-        perspective2Label.setIcon(new ImageIcon("C:\\Users\\sophi\\Documents\\log121_laboratoire2\\src\\marmotte.jpg"));
-    }
-
-    public JLabel getVignetteLabel() {
-        return vignetteLabel;
-    }
-
-    public JLabel getPerspective1Label() {
-        return perspective1Label;
-    }
-
-    public JLabel getPerspective2Label() {
-        return perspective2Label;
+        vue2.addMouseListener(controleur);
+        vue2.addMouseMotionListener(controleur);
+        vue2.addMouseWheelListener(controleur);
     }
 
     public ImageModele getImageModele() {
         return imageModele;
     }
 
-    public Perspective getVignette() {
-        return vignette;
+    public Vue getVueVignette() {
+        return vueVignette;
     }
 
-    public Perspective getPerspective1() {
-        return perspective1;
+    public Vue getVue1() {
+        return vue1;
     }
 
-    public Perspective getPerspective2() {
-        return perspective2;
+    public Vue getVue2() {
+        return vue2;
     }
-
-
 
     public void update() {
-        vignetteLabel.repaint();
-        perspective1Label.repaint();
-        perspective2Label.repaint();
+        repaint();
     }
 }
