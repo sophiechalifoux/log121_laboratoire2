@@ -16,9 +16,7 @@ public class Fenetre extends JFrame {
 
     public Fenetre() {
         this.panneau = new Panneau();
-        System.out.println("Panneau instancie");
         this.menu = new Menu(panneau);
-        System.out.println("Menu instancie");
 
         initialiser();
     }

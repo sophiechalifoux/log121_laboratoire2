@@ -7,7 +7,7 @@ import vue.Vue;
 import java.awt.*;
 
 /**
- * Classe qui permet la translation d'une image a l'aide de la souris.
+ * Classe qui permet le changement de la region affichee
  */
 
 public class TranslationCommande implements Commande {

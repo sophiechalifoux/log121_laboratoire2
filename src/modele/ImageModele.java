@@ -4,7 +4,7 @@ import observateur.*;
 import javax.swing.ImageIcon;
 
 /**
- * Classe representant le sujet
+ * Classe representant l'image téléchargée
  */
 public class ImageModele extends Observable {
 
@@ -22,6 +22,9 @@ public class ImageModele extends Observable {
         return image;
     }
 
-    // Methodes liees aux commandes
-
+    public ImageModele clone() {
+        ImageModele imageModeleClone = new ImageModele();
+        imageModeleClone.setImage(this.image);
+        return imageModeleClone;
+    }
 }

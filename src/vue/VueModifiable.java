@@ -8,6 +8,13 @@ import observateur.Observateur;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Vue concrète qui permet d'effectuer des changements à l'image :
+ * - Translation
+ * - Zoom
+ * - Undo
+ */
+
 public class VueModifiable extends Vue implements Observateur {
 
     EditeurImage editeurImage = EditeurImage.getInstance();
@@ -19,13 +26,13 @@ public class VueModifiable extends Vue implements Observateur {
 
     @Override
     public void paintComponent(Graphics g)  {
-        System.out.println("Paint Component called");
         super.paintComponent(g);
         if ( getImageModele()!= null) {
             Point translation = getPerspective().getPosition();
+            double zoom = getPerspective().getEchelleImage();
             if (getImageModele().getImage() != null) {
                 ImageIcon image = getImageModele().getImage();
-                g.drawImage(image.getImage(), translation.x, translation.y, this);
+                g.drawImage(image.getImage(),translation.x, translation.y, (int)(zoom * image.getIconWidth()), (int)(zoom * image.getIconHeight()), this);
             }
         }
     }
@@ -33,6 +40,5 @@ public class VueModifiable extends Vue implements Observateur {
     @Override
     public void update() {
         repaint();
-        System.out.println("Update method called in VueModifiable");
     }
 }

@@ -7,6 +7,12 @@ import javax.swing.*;
 
 import java.awt.*;
 
+/**
+ * Classe qui regroupe les trois Perspectives :
+ * - 1 Vignette
+ * - 2 VueModifiable
+ */
+
 public class Panneau extends JPanel {
 
     private ImageModele imageModele;
@@ -18,13 +24,18 @@ public class Panneau extends JPanel {
     public Panneau() {
         imageModele = new ImageModele();
 
-        Perspective perspectiveVignette = new Perspective(imageModele);
-        Perspective perspectiveVue1 = new Perspective(imageModele);
-        Perspective perspectiveVue2 = new Perspective(imageModele);
+        Perspective perspectiveVignette = new Perspective(imageModele,null);
+        Perspective perspectiveVue1 = new Perspective(imageModele,null);
+        Perspective perspectiveVue2 = new Perspective(imageModele, null);
 
         this.vueVignette = new Vignette(imageModele, perspectiveVignette,"Vignette");
         this.vue1 = new VueModifiable(imageModele, perspectiveVue1, "Vue1");
         this.vue2 = new VueModifiable(imageModele, perspectiveVue2,"Vue2");
+
+        perspectiveVignette.setVue(vueVignette);
+        perspectiveVue1.setVue(vue1);
+        perspectiveVue2.setVue(vue2);
+
         initialiser();
 
         perspectiveVignette.ajouterObservateur(vueVignette);
@@ -45,14 +56,6 @@ public class Panneau extends JPanel {
         vueVignette.setBackground(Color.BLUE);
         vue1.setBackground(Color.RED);
         vue2.setBackground(Color.YELLOW);
-
-        vue1.addMouseListener(controleur);
-        vue1.addMouseMotionListener(controleur);
-        vue1.addMouseWheelListener(controleur);
-
-        vue2.addMouseListener(controleur);
-        vue2.addMouseMotionListener(controleur);
-        vue2.addMouseWheelListener(controleur);
     }
 
     public ImageModele getImageModele() {

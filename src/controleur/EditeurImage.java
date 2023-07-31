@@ -2,6 +2,9 @@ package controleur;
 
 import modele.ImageModele;
 
+/**
+ * Gestionnaire de l'application
+ */
 public class EditeurImage {
     private static EditeurImage instance;
 

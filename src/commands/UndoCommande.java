@@ -1,30 +1,29 @@
 package commands;
 import java.util.Stack;
 
-import controleur.ImageMemento;
-import vue.Vue;
+import modele.PerspectiveMemento;
+import modele.Perspective;
+
+/**
+ * Commande permettant de defaire la dernière operation.
+ */
 
 public class UndoCommande implements Commande {
 
-    private Vue perspective;
-    private ImageMemento memento;
-    private Stack<ImageMemento> PileMemento = new Stack<>();
-    
+    private Perspective perspective;
+
+    public UndoCommande(Perspective perspective) {
+        this.perspective = perspective;
+    }
+
     public void execute(){
-        if (!(PileMemento.empty())){
-            memento = PileMemento.pop();
-//            ImageModele.getInstanceModele().restaurerMemento(memento);
-        }
+        perspective.annuler();
     }
 
     @Override
-    public void undo() {
-
-    }
+    public void undo() {}
 
     public void save(){
 
-//        memento = ImageModele.getInstanceModele().creerMemento();
-        PileMemento.push(memento);
     }
 }

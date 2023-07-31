@@ -12,6 +12,12 @@ import javax.swing.JMenuItem;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
+/**
+ * Classe qui effectue les actions suivantes à partir du menu :
+ * - Sauvegarde de la perspective
+ * - Ouverture du fichier image et affichage de celui-ci dans l'éditeur
+ */
+
 public class MenuItemListener implements ActionListener {
     EditeurImage editeurImage = EditeurImage.getInstance();
     Panneau panneau;
@@ -36,19 +42,14 @@ public class MenuItemListener implements ActionListener {
             int returnValue = fileChooser.showOpenDialog(null);
 
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
-
                 File selectedFile = fileChooser.getSelectedFile();
                 String file = selectedFile.getAbsolutePath();
+
                 ImageIcon image = new ImageIcon(file);
                 ImageModele imageModele = panneau.getImageModele();
                 imageModele.setImage(image);
-
-                // Notify the observers to update the views
-                imageModele.notifier();
-
             }
                 panneau.update();
          }
-
     }
 }
