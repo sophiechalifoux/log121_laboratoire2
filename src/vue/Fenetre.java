@@ -39,4 +39,10 @@ public class Fenetre extends JFrame {
     public Menu getMenu() {
         return menu;
     }
+    public void setPanneau(Panneau panneau) {
+        this.panneau = panneau;
+        panneau.update();
+
+    }
+
 }

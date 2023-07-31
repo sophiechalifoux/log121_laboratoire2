@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 /**
  * Classe representant le sujet
  */
-public class ImageModele extends Observable {
+public class ImageModele extends Observable implements java.io.Serializable {
 
     private ImageIcon image;
 

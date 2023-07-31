@@ -15,7 +15,7 @@ import observateur.Observateur;
 
 public abstract class Vue extends JPanel implements Observateur {
 
-    private EditeurImage editeurImage = EditeurImage.getInstance();
+    private transient EditeurImage editeurImage = EditeurImage.getInstance();
     private ImageModele imageModele;
     private Perspective perspective;
     private String nom;
@@ -55,4 +55,8 @@ public abstract class Vue extends JPanel implements Observateur {
         return perspective;
     }
 
+    public void update(){
+
+        repaint();
+    }
 }

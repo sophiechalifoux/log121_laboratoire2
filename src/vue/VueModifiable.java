@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class VueModifiable extends Vue implements Observateur {
 
-    EditeurImage editeurImage = EditeurImage.getInstance();
+    transient EditeurImage editeurImage = EditeurImage.getInstance();
 
 
     public VueModifiable(ImageModele imageModele, Perspective perspective, String nom) {

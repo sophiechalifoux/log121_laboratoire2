@@ -4,7 +4,7 @@ import observateur.Observable;
 
 import java.awt.*;
 
-public class Perspective extends Observable {
+public class Perspective extends Observable implements java.io.Serializable{
 
     private ImageModele imageModele;
     private double facteurEchelle;

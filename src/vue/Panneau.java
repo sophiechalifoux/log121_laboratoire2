@@ -13,7 +13,7 @@ public class Panneau extends JPanel {
     private Vue vueVignette;
     private Vue vue1;
     private Vue vue2;
-    private Controleur controleur;
+    private transient Controleur controleur;
 
     public Panneau() {
         imageModele = new ImageModele();
@@ -73,5 +73,11 @@ public class Panneau extends JPanel {
 
     public void update() {
         repaint();
+    }
+    
+    public void recharger(){
+        vue1.update();
+        vue2.update();
+        vueVignette.update();
     }
 }
