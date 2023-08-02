@@ -1,9 +1,6 @@
-package commands;
+package commandes;
 
-import modele.ImageModele;
 import modele.Perspective;
-import vue.Vue;
-
 import java.awt.*;
 
 /**

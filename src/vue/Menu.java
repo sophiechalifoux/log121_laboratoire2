@@ -3,8 +3,14 @@ package vue;
 import javax.swing.*;
 import controleur.*;
 
-public class Menu extends JMenuBar {
+/**
+ * Menu de l'application qui contient les onglets pour :
+ * - Charger un fichier
+ * - Sauvegarder un fichier
+ */
 
+public class Menu extends JMenuBar  {
+    EditeurImage editeurImage = EditeurImage.getInstance();
     private final JMenu ongletFichier;
     private final JMenuItem open;
     private final JMenuItem save;
@@ -17,7 +23,7 @@ public class Menu extends JMenuBar {
     }
 
     private void initialiser(Panneau panneau) {
-        MenuItemListener menuItemListener = new MenuItemListener(panneau);
+        MenuItemListener menuItemListener = new MenuItemListener(editeurImage.getPanneau());
 
         save.addActionListener(menuItemListener);
         open.addActionListener(menuItemListener);
@@ -27,6 +33,4 @@ public class Menu extends JMenuBar {
         ongletFichier.add(save);
 
     }
-
-
 }

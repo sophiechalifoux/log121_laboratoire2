@@ -1,4 +1,4 @@
-package commands;
+package commandes;
 
 /**
  * Interface des commandes disponibles dans l'éditeur d'image :

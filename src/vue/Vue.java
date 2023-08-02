@@ -4,7 +4,6 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import controleur.EditeurImage;
 import modele.ImageModele;
 import modele.Perspective;
 import observateur.Observateur;
@@ -17,11 +16,6 @@ import observateur.Observateur;
 
 public abstract class Vue extends JPanel implements Observateur {
 
-    public static final int LARGEUR = Vue.WIDTH;
-    public static final int HAUTEUR = Vue.HEIGHT;
-
-
-    private EditeurImage editeurImage = EditeurImage.getInstance();
     private ImageModele imageModele;
     private Perspective perspective;
     private String nom;

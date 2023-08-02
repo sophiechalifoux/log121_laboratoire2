@@ -1,9 +1,9 @@
 package controleur;
 
-import commands.Commande;
-import commands.TranslationCommande;
-import commands.UndoCommande;
-import commands.ZoomCommande;
+import commandes.Commande;
+import commandes.TranslationCommande;
+import commandes.UndoCommande;
+import commandes.ZoomCommande;
 import modele.ImageModele;
 import modele.Perspective;
 import vue.Panneau;
@@ -12,12 +12,15 @@ import vue.VueModifiable;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serializable;
 
 /**
  * Classe permettant à l'usager de modifier le modèle
  */
 
-public class Controleur implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
+public class Controleur implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener, Serializable {
+
+    EditeurImage editeurImage = EditeurImage.getInstance();
 
     // Modele
     ImageModele imageModele;
@@ -25,23 +28,24 @@ public class Controleur implements MouseListener, MouseMotionListener, MouseWhee
     Perspective perspectiveVue1;
     Perspective perspectiveVue2;
 
-
     // Vue
-    Panneau panneau;
-    Vue vueVignette;
-    Vue vue1;
-    Vue vue2;
-    Vue vueActive;
-
-    //
+    transient Panneau panneau;
+    transient Vue vueVignette;
+    transient Vue vue1;
+    transient Vue vue2;
+    transient Vue vueActive;
 
     private Point positionInitiale = new Point();
     private int echelleImage;
 
 
+
+
     public Controleur(ImageModele imageModele, Perspective perspectiveVignette, Perspective perspectiveVue1, Perspective perspectiveVue2,Panneau panneau) {
         this.imageModele = imageModele;
         this.panneau = panneau;
+        editeurImage.setImageModele(imageModele);
+        editeurImage.setPanneau(panneau);
 
         this.perspectiveVignette = perspectiveVignette;
         this.perspectiveVue1 = perspectiveVue1;
@@ -51,7 +55,13 @@ public class Controleur implements MouseListener, MouseMotionListener, MouseWhee
         this.vue1 = panneau.getVue1();
         this.vue2 = panneau.getVue2();
 
-        // Ajout des MouseListener aux vues
+
+        // Ajouter les vues comme Observateur a leurs perspectives respectives
+        perspectiveVignette.ajouterObservateur(vueVignette);
+        perspectiveVue1.ajouterObservateur(vue1);
+        perspectiveVue2.ajouterObservateur(vue2);
+
+        // Ajout des MouseListener et KeyListener aux vues
         vue1.addMouseListener(this);
         vue1.addMouseMotionListener(this);
         vue1.addMouseWheelListener(this);
@@ -64,11 +74,14 @@ public class Controleur implements MouseListener, MouseMotionListener, MouseWhee
 
         vue1.setFocusable(true);
         vue2.setFocusable(true);
-
-
-
     }
 
+    // -------------------- ACTIONS ASSOCIEES AUX COMMANDES -------------------------- //
+
+    /**
+     * Methode pour determiner la vue active
+     * @param e, mouseEvent quand l'usager utilise le bouton gauche de la souris
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == vue1) {
@@ -79,21 +92,18 @@ public class Controleur implements MouseListener, MouseMotionListener, MouseWhee
             vueActive = vue2;
             vue2.requestFocusInWindow();
         }
-        System.out.println(vueActive.getNom());
 
     }
     @Override
     public void mousePressed(MouseEvent e) {
         positionInitiale = e.getPoint();
         VueModifiable vue = (VueModifiable) e.getSource();
-        System.out.println("Position initiale " + positionInitiale.x + ", " + positionInitiale.y);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         Point positionFinale = e.getPoint();
         Vue vue = (VueModifiable)e.getSource();
-        System.out.println("Position arrivee " + positionFinale.x + "," + positionFinale.y);
     }
 
     @Override
@@ -106,12 +116,12 @@ public class Controleur implements MouseListener, MouseMotionListener, MouseWhee
 
     }
 
-    /*
-     *
+    /**
+     * Methode pour deplacer la position de l'image
+     * @param e, mouseEvent quand l'usager tient enfonce le bouton gauche de la souris
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        System.out.println("Its dragged");
         Point translation = new Point((e.getX() - positionInitiale.x),(e.getY() - positionInitiale.y));
         Vue vue = (VueModifiable)e.getSource();
         Perspective perspective = vue.getPerspective();
@@ -129,9 +139,10 @@ public class Controleur implements MouseListener, MouseMotionListener, MouseWhee
 
     }
 
-    // ======================================================================== //
-    //
-    // ======================================================================== //
+    /**
+     * Methode pour mettre a jour le facteur d'echelle de l'image
+     * @param e, mouseWheelEvent quand l'usager fait rouler la molette de la souris
+     */
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         int nbWheelRotation = e.getWheelRotation();
@@ -142,17 +153,11 @@ public class Controleur implements MouseListener, MouseMotionListener, MouseWhee
             zoom = Math.pow(1.1, nbWheelRotation);
             Commande zoomCommande = new ZoomCommande(perspective, zoom);
             zoomCommande.execute();
-            System.out.println("Its zoomed " + zoom );
-
             perspective.notifier();
-
         } else {
-
             zoom = Math.pow(0.9, - nbWheelRotation);
             Commande dezoomCommande = new ZoomCommande(perspective, zoom);
             dezoomCommande.execute();
-            System.out.println("Its dezoomed " + zoom );
-
             perspective.notifier();
 
         }
@@ -163,24 +168,26 @@ public class Controleur implements MouseListener, MouseMotionListener, MouseWhee
 
     }
 
+    /**
+     * Methode pour annuler les commandes effectuees sur l'image
+     * @param e, keyEvent quand l'usager appui sur les touches CTRL+Z
+     */
     @Override
     public void keyPressed(KeyEvent e) {
-
         int key = e.getKeyCode();
         int keyModifier = e.getModifiers();
-        Perspective perspectiveActive = vueActive.getPerspective();
 
-        if ((key == KeyEvent.VK_Z) && ((keyModifier & KeyEvent.CTRL_MASK) != 0))
-        {
-            System.out.println("UNDO UNDO :D!");
-            if (perspectiveActive.getHistorique() != null) {
-                Commande undoCommande = new UndoCommande(perspectiveActive);
-                undoCommande.execute();
+        if (vueActive != null) {
+            Perspective perspectiveActive = vueActive.getPerspective();
+            if ((key == KeyEvent.VK_Z) && ((keyModifier & KeyEvent.CTRL_MASK) != 0))
+            {
+                if (perspectiveActive.getHistorique() != null) {
+                    Commande undoCommande = new UndoCommande(perspectiveActive);
+                    undoCommande.execute();
+                }
             }
-
+            perspectiveActive.notifier();
         }
-        perspectiveActive.notifier();
-
     }
 
     @Override

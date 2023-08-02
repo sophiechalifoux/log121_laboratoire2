@@ -1,23 +1,20 @@
 package vue;
 
-
-import controleur.EditeurImage;
-
 import javax.swing.*;
-import java.awt.*;
+
 
 /**
  * Fenetre de l'application
  */
 
 public class Fenetre extends JFrame {
+
     private  Panneau panneau;
     private  Menu menu;
 
     public Fenetre() {
         this.panneau = new Panneau();
         this.menu = new Menu(panneau);
-
         initialiser();
     }
 
@@ -30,11 +27,4 @@ public class Fenetre extends JFrame {
         this.setVisible(true);
     }
 
-    public Panneau getPanneau() {
-        return panneau;
-    }
-
-    public Menu getMenu() {
-        return menu;
-    }
 }

@@ -1,11 +1,12 @@
 package observateur;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Observable {
+public abstract class Observable implements Serializable {
 
-    private List<Observateur> observateurs = new ArrayList<>();
+    private transient List<Observateur> observateurs = new ArrayList<>();
 
     public void ajouterObservateur(Observateur observateur){observateurs.add(observateur);}
     public void retirerObservateur(Observateur observateur){observateurs.remove(observateur);}

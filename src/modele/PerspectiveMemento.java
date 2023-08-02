@@ -3,16 +3,14 @@ package modele;
 import vue.Vue;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class PerspectiveMemento {
-
-    private Perspective perspective;
-    private ImageModele imageModele;
-    private Vue vue;
-    private Point position;
-    private double echelleImage;
-
-
+public class PerspectiveMemento implements Serializable {
+    private transient Perspective perspective;
+    private transient ImageModele imageModele;
+    private transient Vue vue;
+    private transient Point position;
+    private transient double echelleImage;
 
     public PerspectiveMemento(ImageModele imageModele, Vue vue, Point position, double echelleImage) {
         this.imageModele = imageModele.clone();
@@ -20,7 +18,6 @@ public class PerspectiveMemento {
         this.position = new Point(position);
         this.echelleImage = echelleImage;
     }
-
 
     public Perspective getPerspective() {
         return perspective;

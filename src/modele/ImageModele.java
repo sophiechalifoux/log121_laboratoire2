@@ -2,14 +2,13 @@ package modele;
 
 import observateur.*;
 import javax.swing.ImageIcon;
+import java.io.Serializable;
 
 /**
  * Classe representant l'image téléchargée
  */
-public class ImageModele extends Observable {
-
+public class ImageModele extends Observable implements Serializable {
     private ImageIcon image;
-
     public ImageModele() {
     }
 
